@@ -12,7 +12,7 @@ import re
 import os
 
 
-def get_products_info(product_name, min_date="1달 전", min_price=1000000, max_price=30000000, wait_time=5):
+def get_products_info(product_name, year_dict, min_date="1달 전", min_price=1000000, max_price=30000000, wait_time=5):
 
     options = ChromeOptions()
     #백그라운드 실행 옵션
@@ -29,8 +29,6 @@ def get_products_info(product_name, min_date="1달 전", min_price=1000000, max_
     url = "https://m.bunjang.co.kr"
     page = 1
     is_continue = True
-    years = [2024, 2023, 2022, 2021, 2020, 2019, 2018]
-    year_dict = {year: [] for year in years}
     min_date = convert_to_datetime(min_date)
 
     while(is_continue):
@@ -137,7 +135,10 @@ def get_data(products_info):
 if __name__ == "__main__":
     print("실행중...")
     products = ["흑콤", "아쿠아테라 청판"]
+    years = [2024, 2023, 2022, 2021, 2020, 2019, 2018]
+
     for product_name in products:
+        year_dict = {year: [] for year in years}
         print(product_name)
         products_info = get_products_info(product_name)
         data = get_data(products_info)

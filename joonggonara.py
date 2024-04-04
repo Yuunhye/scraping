@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import bunjang as bj
 import re
 
-def get_products_info(product_name, min_date="2024-03-03", min_price=1000000, max_price=30000000, wait_time=5):
+def get_products_info(product_name, year_dict, min_date="2024-03-03", min_price=1000000, max_price=30000000, wait_time=5):
 
     options = ChromeOptions()
     # 백그라운드 실행 옵션
@@ -27,9 +27,6 @@ def get_products_info(product_name, min_date="2024-03-03", min_price=1000000, ma
     url = home + "/search/" + product_name + "?sort=RECENT_SORT&page=" + str(page)
     min_date = bj.convert_to_datetime(min_date)
     progress = True
-
-    years = [2024, 2023, 2022, 2021, 2020, 2019, 2018]
-    year_dict = {year: [] for year in years}
 
     while(progress):
         driver.get(url)
@@ -82,5 +79,9 @@ def get_products_info(product_name, min_date="2024-03-03", min_price=1000000, ma
 
 if __name__ == "__main__":
     print("실행중...")
+    years = [2024, 2023, 2022, 2021, 2020, 2019, 2018]
+    year_dict = {year: [] for year in years}
     products_info = get_products_info("흑콤")
-    print(products_info)
+
+    for year in products_info.keys():
+        print(f'{year} : {products_info[year]}')
